@@ -1,0 +1,655 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="hats-header mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="page-title mb-2">
+                    <i class="fas fa-hard-hat me-3" style="color: var(--nfl-red);"></i>NFL Hats & Caps
+                </h1>
+                <p class="page-subtitle mb-0">Premium headwear collection featuring AFC North division teams</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="header-badge">
+                    <i class="fas fa-crown fa-3x" style="color: var(--nfl-blue);"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Deal Banner -->
+<div class="container mb-5">
+    <div class="deal-banner">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h3 class="deal-title">
+                    <i class="fas fa-fire me-2"></i>Special Offer: Buy One Hat, Get Second 50% Off!
+                </h3>
+                <p class="deal-text">Mix and match any hats from our AFC North collection. Lower priced item will be discounted.</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="deal-badge-large">BOGO 50%</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AFC North Division Section -->
+<div class="container">
+    <div class="division-header text-center mb-5">
+        <h2 class="section-title">
+            <i class="fas fa-football-ball me-2" style="color: var(--nfl-red);"></i>AFC North Collection
+        </h2>
+        <p class="section-subtitle">Top your head with championship style</p>
+    </div>
+
+    <!-- Teams Grid -->
+    {% for team_key, team_data in teams.items() %}
+    <div class="team-section mb-5">
+        <div class="team-header mb-4">
+            <h3 class="team-name" style="color: {{ team_data.team_colors[0] }};">
+                {{ team_data.team_name }}
+            </h3>
+            <div class="team-colors">
+                {% for color in team_data.team_colors %}
+                <div class="color-swatch" style="background-color: {{ color }};"></div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-2"></div>
+            {% for hat in team_data.hats %}
+            <div class="col-md-4 mb-4">
+                <div class="hat-card" data-team="{{ team_key }}">
+                    <!-- Hat Image -->
+                    {% if hat.image %}
+                    <div class="hat-image">
+                        <img src="{{ hat.image }}" alt="{{ hat.name }}" class="hat-img">
+                        <div class="hat-overlay">
+                            <div class="hat-style-badge">{{ hat.style }}</div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="hat-image-placeholder" style="background: linear-gradient(135deg, {{ team_data.team_colors[0] }}, {{ team_data.team_colors[1] }});">
+                        <div class="image-overlay">
+                            <i class="fas fa-hard-hat fa-3x"></i>
+                            <div class="image-text">{{ hat.image_placeholder }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="hat-content">
+                        <div class="hat-header">
+                            <h4 class="hat-name">{{ hat.name }}</h4>
+                            <span class="hat-style">{{ hat.style }}</span>
+                        </div>
+                        
+                        <p class="hat-description">{{ hat.description }}</p>
+                        
+                        <div class="hat-features">
+                            {% for feature in hat.features %}
+                            <span class="feature-badge">{{ feature }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="hat-footer">
+                            <div class="price-section">
+                                <span class="price">{{ hat.price }}</span>
+                                <small class="price-note">BOGO 50% eligible</small>
+                            </div>
+                            
+                            <div class="hat-actions">
+                                <form method="POST" action="{{ url_for('hats.add_hat_to_cart') }}" style="display: inline;">
+                                    <input type="hidden" name="team" value="{{ team_key }}">
+                                    <input type="hidden" name="hat_index" value="{{ loop.index0 }}">
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-shopping-cart me-1"></i>Add to Cart
+                                    </button>
+                                </form>
+                                <button class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-heart me-1"></i>Wishlist
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hat-badges">
+                        <span class="quality-badge">
+                            <i class="fas fa-certificate"></i>Official NFL
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Hat Sizing Guide Section -->
+<div class="container mb-5">
+    <div class="sizing-guide">
+        <h3 class="guide-title text-center mb-4">
+            <i class="fas fa-ruler me-2" style="color: var(--nfl-blue);"></i>Hat Sizing Guide
+        </h3>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-3">
+                <div class="size-card">
+                    <div class="size-icon">
+                        <i class="fas fa-adjust"></i>
+                    </div>
+                    <h5>Snapback</h5>
+                    <p>Adjustable plastic snap closure with flat brim for universal fit</p>
+                    <small class="text-muted">One size fits most</small>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="size-card">
+                    <div class="size-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h5>Beanie</h5>
+                    <p>Warm knit caps with stretch fit for comfortable wear</p>
+                    <small class="text-muted">One size fits most</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Size Chart -->
+        <div class="size-chart mt-4">
+            <h5 class="text-center mb-3">Hat Size Guide</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Head Circumference</th>
+                            <th>Size</th>
+                            <th>Snapback Fit</th>
+                            <th>Beanie Fit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>21.5" - 22"</strong></td>
+                            <td>Small</td>
+                            <td>Adjustable</td>
+                            <td>Snug stretch</td>
+                        </tr>
+                        <tr>
+                            <td><strong>22" - 23"</strong></td>
+                            <td>Medium</td>
+                            <td>Adjustable</td>
+                            <td>Comfortable stretch</td>
+                        </tr>
+                        <tr>
+                            <td><strong>23" - 24"</strong></td>
+                            <td>Large</td>
+                            <td>Adjustable</td>
+                            <td>Relaxed stretch</td>
+                        </tr>
+                        <tr>
+                            <td><strong>24" - 25"</strong></td>
+                            <td>X-Large</td>
+                            <td>Maximum adjustment</td>
+                            <td>Full stretch</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center mt-3">
+                <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Measure around the widest part of your head, just above your ears
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="container mb-5">
+    <div class="cta-section">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h3 class="cta-title">Need Help Finding the Perfect Hat?</h3>
+                <p class="cta-text">Our team experts can help you find the right fit and style for your team pride. Contact us for personalized recommendations.</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="{{ url_for('contact.show_contact') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-headset me-2"></i>Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Page Header Styling */
+    .hats-header {
+        background: linear-gradient(135deg, var(--nfl-light-gray) 0%, var(--nfl-white) 50%, var(--nfl-light-gray) 100%);
+        padding: 3rem 0;
+        border-bottom: 3px solid var(--nfl-red);
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--nfl-black);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .page-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+    }
+    
+    .header-badge {
+        text-align: center;
+    }
+    
+    /* Deal Banner */
+    .deal-banner {
+        background: linear-gradient(45deg, var(--nfl-red), #ff6b35);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(213, 10, 10, 0.3);
+    }
+    
+    .deal-title {
+        font-size: 1.6rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .deal-text {
+        font-size: 1rem;
+        opacity: 0.95;
+        margin-bottom: 0;
+    }
+    
+    .deal-badge-large {
+        background: var(--nfl-white);
+        color: var(--nfl-red);
+        padding: 1rem 1.5rem;
+        border-radius: 25px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    /* Division Header */
+    .division-header .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--nfl-black);
+        margin-bottom: 0.5rem;
+    }
+    
+    .division-header .section-subtitle {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    /* Team Section Styling */
+    .team-section {
+        border-bottom: 2px solid var(--nfl-light-gray);
+        padding-bottom: 3rem;
+    }
+    
+    .team-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .team-name {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    .team-colors {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .color-swatch {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid var(--nfl-white);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    /* Hat Card Styling */
+    .hat-card {
+        background: var(--nfl-white);
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+        position: relative;
+    }
+    
+    .hat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+    
+    /* Hat Image Styling */
+    .hat-image {
+        position: relative;
+        height: 300px;
+        overflow: hidden;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .hat-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        transition: transform 0.3s ease;
+        background: white;
+    }
+    
+    .hat-card:hover .hat-img {
+        transform: scale(1.05);
+    }
+    
+    .hat-overlay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .hat-style-badge {
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* Image Placeholder */
+    .hat-image-placeholder {
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .image-overlay {
+        text-align: center;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .image-overlay i {
+        margin-bottom: 1rem;
+        opacity: 0.8;
+    }
+    
+    .image-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        background: rgba(255,255,255,0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Hat Content */
+    .hat-content {
+        padding: 1.5rem;
+    }
+    
+    .hat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+    
+    .hat-name {
+        color: var(--nfl-black);
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: 0;
+        flex-grow: 1;
+    }
+    
+    .hat-style {
+        background: var(--nfl-blue);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    
+    .hat-description {
+        color: #666;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .hat-features {
+        margin-bottom: 1.5rem;
+    }
+    
+    .feature-badge {
+        display: inline-block;
+        background: var(--nfl-light-gray);
+        color: var(--nfl-black);
+        padding: 0.3rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .hat-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .price-section {
+        flex-grow: 1;
+    }
+    
+    .price {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--nfl-blue);
+    }
+    
+    .price-note {
+        display: block;
+        color: var(--nfl-red);
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+    }
+    
+    .hat-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .hat-badges {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .quality-badge {
+        background: rgba(255,255,255,0.95);
+        color: var(--nfl-blue);
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    /* Sizing Guide Styling */
+    .sizing-guide {
+        background: var(--nfl-white);
+        border: 2px solid var(--nfl-light-gray);
+        border-radius: 15px;
+        padding: 2rem;
+    }
+    
+    .guide-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--nfl-black);
+        margin-bottom: 1.5rem;
+    }
+    
+    .size-card {
+        background: var(--nfl-light-gray);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .size-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        background: #e9ecef;
+    }
+    
+    .size-icon {
+        font-size: 2rem;
+        color: var(--nfl-blue);
+        margin-bottom: 1rem;
+    }
+    
+    .size-card h5 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .size-card p {
+        color: #666;
+        margin-bottom: 0.5rem;
+    }
+    
+    .size-chart {
+        background: var(--nfl-white);
+        border-radius: 10px;
+        padding: 1.5rem;
+        border: 1px solid var(--nfl-light-gray);
+    }
+    
+    .size-chart h5 {
+        color: var(--nfl-black);
+        font-weight: bold;
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        background-color: var(--nfl-black) !important;
+        color: white;
+        font-weight: bold;
+        border-color: var(--nfl-black);
+    }
+    
+    .table tbody td {
+        vertical-align: middle;
+    }
+    
+    /* Call to Action */
+    .cta-section {
+        background: linear-gradient(135deg, #4682B4, #5F9EA0);
+        color: var(--nfl-black);
+        padding: 2.5rem 2rem;
+        border-radius: 15px;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-text {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 2rem;
+        }
+        
+        .team-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .hat-footer {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .hat-actions {
+            flex-direction: row;
+            width: 100%;
+        }
+        
+        .hat-actions .btn {
+            flex: 1;
+        }
+        
+        .deal-banner {
+            text-align: center;
+        }
+        
+        .deal-banner .col-md-4 {
+            margin-top: 1rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+        }
+        
+        .cta-section .col-md-4 {
+            margin-top: 1rem;
+        }
+    }
+</style>
+
+{% endblock %}

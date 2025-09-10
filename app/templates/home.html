@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- NFL Fan Shop Banner -->
+<div class="nfl-banner mb-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="banner-title mb-2">
+                    <i class="fas fa-football-ball me-3"></i>Your One-Stop NFL Fan Shop
+                </h1>
+                <p class="banner-subtitle mb-0">Official gear, authentic jerseys, and everything you need to show your team pride!</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="banner-logo">
+                    <i class="fas fa-trophy fa-4x" style="color: var(--nfl-red);"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Deals Section -->
+<div class="container mb-5">
+    <div class="deals-header text-center mb-4">
+        <h2 class="section-title">
+            <i class="fas fa-fire me-2" style="color: var(--nfl-red);"></i>Featured Deals
+        </h2>
+        <p class="section-subtitle">Don't miss these championship savings!</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="deal-card">
+                <div class="deal-badge">20% OFF</div>
+                <div class="deal-content">
+                    <i class="fas fa-tshirt fa-2x mb-3" style="color: var(--nfl-blue);"></i>
+                    <h5>Select Jerseys</h5>
+                    <p>Get 20% off all home and away jerseys from your favorite teams</p>
+                    <small class="text-muted">*Excludes playoff editions</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="deal-card">
+                <div class="deal-badge">BOGO 50%</div>
+                <div class="deal-content">
+                    <i class="fas fa-hard-hat fa-2x mb-3" style="color: var(--nfl-blue);"></i>
+                    <h5>Hats & Caps</h5>
+                    <p>Buy one hat, get the second 50% off on all team caps and beanies</p>
+                    <small class="text-muted">*Lower priced item discounted</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="deal-card">
+                <div class="deal-badge">FREE SHIP</div>
+                <div class="deal-content">
+                    <i class="fas fa-shipping-fast fa-2x mb-3" style="color: var(--nfl-blue);"></i>
+                    <h5>Orders Over $75</h5>
+                    <p>Free standard shipping on all orders over $75 anywhere in the USA</p>
+                    <small class="text-muted">*Standard shipping only</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Why Choose Us Section -->
+<div class="container mb-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title">
+            <i class="fas fa-shield-alt me-2" style="color: var(--nfl-red);"></i>Why Choose Gridiron Gear?
+        </h2>
+        <p class="section-subtitle">Your trusted source for authentic NFL merchandise</p>
+    </div>
+    
+    <div class="row justify-content-center">
+        <!-- Authenticity -->
+        <div class="col-md-4 mb-4">
+            <div class="product-category">
+                <div class="category-header">
+                    <i class="fas fa-certificate fa-2x mb-2" style="color: var(--nfl-red);"></i>
+                    <h4>100% Authentic</h4>
+                </div>
+                
+                <div class="info-content text-center">
+                    <p>Every item is officially licensed NFL merchandise. We guarantee authenticity with all our jerseys, hats, and accessories.</p>
+                    <small class="text-success">✓ Official NFL License</small><br>
+                    <small class="text-success">✓ Quality Guaranteed</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fast Shipping -->
+        <div class="col-md-4 mb-4">
+            <div class="product-category">
+                <div class="category-header">
+                    <i class="fas fa-shipping-fast fa-2x mb-2" style="color: var(--nfl-red);"></i>
+                    <h4>Fast & Free Shipping</h4>
+                </div>
+                
+                <div class="info-content text-center">
+                    <p>Get your gear fast with our expedited shipping options. Free standard shipping on orders over $75!</p>
+                    <small class="text-success">✓ Free Shipping $75+</small><br>
+                    <small class="text-success">✓ 2-Day Express Available</small>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="text-center mb-5">
+    <div class="cta-section">
+        <h3 class="mb-3">Ready to Gear Up?</h3>
+        <p class="lead mb-4">Join thousands of fans who trust Gridiron Gear for authentic NFL merchandise</p>
+        <a href="{{ url_for('payment.checkout') }}" class="btn btn-primary btn-lg me-3">
+            <i class="fas fa-shopping-cart me-2"></i>Checkout Now
+        </a>
+        <a href="{{ url_for('jerseys.show_jerseys') }}" class="btn btn-outline-secondary btn-lg">
+            <i class="fas fa-tshirt me-2"></i>Browse Jerseys
+        </a>
+    </div>
+</div>
+
+<style>
+    /* NFL Banner Styling */
+    .nfl-banner {
+        background: linear-gradient(135deg, #4682B4 0%, #5F9EA0 100%);
+        color: var(--nfl-black);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+    }
+    
+    .banner-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .banner-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+    
+    .banner-logo {
+        text-align: center;
+    }
+    
+    /* Section Headers */
+    .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--nfl-black);
+        margin-bottom: 0.5rem;
+    }
+    
+    .section-subtitle {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Featured Deals Styling */
+    .deal-card {
+        background: var(--nfl-white);
+        border: 2px solid var(--nfl-light-gray);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
+        transition: all 0.3s ease;
+        height: 100%;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .deal-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        border-color: var(--nfl-red);
+    }
+    
+    .deal-badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: var(--nfl-red);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .deal-content h5 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    /* Featured Products Styling */
+    .product-category {
+        background: var(--nfl-white);
+        border: 2px solid var(--nfl-light-gray);
+        border-radius: 12px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .product-category:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        border-color: var(--nfl-blue);
+    }
+    
+    .category-header {
+        text-align: center;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--nfl-light-gray);
+        margin-bottom: 1rem;
+    }
+    
+    .category-header h4 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+    
+    .product-item {
+        background: var(--nfl-light-gray);
+        padding: 1rem;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+    }
+    
+    .product-item:hover {
+        background: #e9ecef;
+    }
+    
+    .product-info h6 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .price {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--nfl-blue);
+        margin-bottom: 0.5rem;
+    }
+    
+    .old-price {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+    }
+    
+    /* Call to Action Section */
+    .cta-section {
+        background: linear-gradient(45deg, var(--nfl-light-gray) 0%, var(--nfl-white) 100%);
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        border: 2px solid var(--nfl-light-gray);
+    }
+    
+    .cta-section h3 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        font-size: 2rem;
+    }
+    
+    /* Button Styling */
+    .btn-outline-primary {
+        border-color: var(--nfl-blue);
+        color: var(--nfl-blue);
+        font-weight: bold;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: var(--nfl-blue);
+        border-color: var(--nfl-blue);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(1, 51, 105, 0.4);
+    }
+    
+    .btn-outline-secondary {
+        border-color: var(--nfl-blue);
+        color: var(--nfl-blue);
+        font-weight: bold;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-secondary:hover {
+        background-color: var(--nfl-blue);
+        border-color: var(--nfl-blue);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(1, 51, 105, 0.4);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .banner-title {
+            font-size: 1.8rem;
+        }
+        
+        .banner-subtitle {
+            font-size: 1rem;
+        }
+        
+        .deal-badge {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
+        }
+    }
+</style>
+
+{% endblock %}

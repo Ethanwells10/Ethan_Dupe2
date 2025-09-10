@@ -1,0 +1,849 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="payment-header mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="page-title mb-2">
+                    <i class="fas fa-credit-card me-3" style="color: var(--nfl-red);"></i>Secure Checkout
+                </h1>
+                <p class="page-subtitle mb-0">Complete your order for authentic NFL merchandise</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt fa-3x" style="color: var(--nfl-blue);"></i>
+                    <div class="security-text">SSL Secured</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Checkout Progress -->
+<div class="container mb-4">
+    <div class="checkout-progress">
+        <div class="progress-step active">
+            <div class="step-number">1</div>
+            <div class="step-label">Shipping</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step active">
+            <div class="step-number">2</div>
+            <div class="step-label">Payment</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step active">
+            <div class="step-number">3</div>
+            <div class="step-label">Review</div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <!-- Main Checkout Form -->
+        <div class="col-lg-8">
+            
+            <!-- Shipping Information Section -->
+            <div class="checkout-section mb-4">
+                <div class="section-header">
+                    <h3><i class="fas fa-shipping-fast me-2" style="color: var(--nfl-blue);"></i>Shipping Information</h3>
+                </div>
+                <div class="section-content">
+                    <form>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="John" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="Smith" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" placeholder="john.smith@email.com" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Street Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="123 Main Street" required>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" placeholder="Cleveland" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="state" class="form-label">State</label>
+                                <select class="form-select" id="state" required>
+                                    <option value="">Select State</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="CA">California</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="FL">Florida</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="zip" class="form-label">ZIP Code</label>
+                                <input type="text" class="form-control" id="zip" placeholder="44101" required>
+                            </div>
+                        </div>
+                        
+                        <div class="shipping-options mb-3">
+                            <h5 class="mb-3">Shipping Method</h5>
+                            
+                            {% if order.free_shipping_applied %}
+                            <div class="free-shipping-alert">
+                                <div class="alert alert-success d-flex align-items-center">
+                                    <i class="fas fa-truck me-2"></i>
+                                    <div>
+                                        <strong>Congratulations! You qualify for FREE Standard Shipping!</strong><br>
+                                        <small>Your order total (after discounts) is over $75</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <div class="form-check shipping-option {% if order.free_shipping_applied %}recommended{% endif %}">
+                                <input class="form-check-input" type="radio" name="shipping" id="standard" value="standard" checked>
+                                <label class="form-check-label" for="standard">
+                                    <div class="shipping-info">
+                                        <strong>
+                                            Standard Shipping (5-7 business days)
+                                            {% if order.free_shipping_applied %}
+                                            <span class="badge badge-success">RECOMMENDED</span>
+                                            {% endif %}
+                                        </strong>
+                                        <span class="shipping-price">
+                                            {% if order.free_shipping_applied %}
+                                            <span class="original-price">$12.99</span>
+                                            <span class="free-price">FREE</span>
+                                            {% else %}
+                                            $12.99
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    {% if not order.free_shipping_applied %}
+                                    <small class="text-muted">
+                                        {% if order.subtotal > 0 %}
+                                        Add ${{ "%.2f"|format(75 - order.subtotal) }} more for free shipping
+                                        {% else %}
+                                        Free on orders over $75 (after discounts)
+                                        {% endif %}
+                                    </small>
+                                    {% else %}
+                                    <small class="text-success">
+                                        <i class="fas fa-check-circle me-1"></i>Free shipping applied to your order!
+                                    </small>
+                                    {% endif %}
+                                </label>
+                            </div>
+                            
+                            <div class="form-check shipping-option">
+                                <input class="form-check-input" type="radio" name="shipping" id="express" value="express">
+                                <label class="form-check-label" for="express">
+                                    <div class="shipping-info">
+                                        <strong>Express Shipping (2-3 business days)</strong>
+                                        <span class="shipping-price">$24.99</span>
+                                    </div>
+                                    <small class="text-muted">Get your order faster</small>
+                                </label>
+                            </div>
+                            
+                            <div class="form-check shipping-option">
+                                <input class="form-check-input" type="radio" name="shipping" id="overnight" value="overnight">
+                                <label class="form-check-label" for="overnight">
+                                    <div class="shipping-info">
+                                        <strong>Overnight Shipping (Next business day)</strong>
+                                        <span class="shipping-price">$39.99</span>
+                                    </div>
+                                    <small class="text-muted">Fastest delivery available</small>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Payment Method Section -->
+            <div class="checkout-section mb-4">
+                <div class="section-header">
+                    <h3><i class="fas fa-credit-card me-2" style="color: var(--nfl-blue);"></i>Payment Method</h3>
+                </div>
+                <div class="section-content">
+                    <div class="payment-methods mb-4">
+                        <div class="form-check payment-method">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="creditCard" checked>
+                            <label class="form-check-label" for="creditCard">
+                                <div class="method-info">
+                                    <i class="fas fa-credit-card me-2"></i>
+                                    <strong>Credit/Debit Card</strong>
+                                </div>
+                                <div class="accepted-cards">
+                                    <i class="fab fa-cc-visa"></i>
+                                    <i class="fab fa-cc-mastercard"></i>
+                                    <i class="fab fa-cc-amex"></i>
+                                    <i class="fab fa-cc-discover"></i>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="form-check payment-method">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal">
+                            <label class="form-check-label" for="paypal">
+                                <div class="method-info">
+                                    <i class="fab fa-paypal me-2"></i>
+                                    <strong>PayPal</strong>
+                                </div>
+                                <small class="text-muted">Pay securely with your PayPal account</small>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="credit-card-form">
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="expiryDate" class="form-label">Expiry Date</label>
+                                <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="cardName" class="form-label">Name on Card</label>
+                            <input type="text" class="form-control" id="cardName" placeholder="John Smith" required>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="billingAddress">
+                            <label class="form-check-label" for="billingAddress">
+                                Billing address is different from shipping address
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Review Sidebar -->
+        <div class="col-lg-4">
+            <div class="order-review-section sticky-top">
+                <div class="section-header">
+                    <h3><i class="fas fa-shopping-bag me-2" style="color: var(--nfl-blue);"></i>Order Review</h3>
+                </div>
+                <div class="section-content">
+                    <div class="order-items">
+                        {% if order.products %}
+                            {% for item in order.products %}
+                            <div class="order-item">
+                                <div class="item-details">
+                                    <h6 class="item-name">{{ item.name }}</h6>
+                                    {% if item.player %}
+                                    <small class="item-player text-muted">Player: {{ item.player }} #{{ item.number }}</small><br>
+                                    {% endif %}
+                                    {% if item.team %}
+                                    <small class="item-team text-muted">Team: {{ item.team }}</small><br>
+                                    {% endif %}
+                                    {% if item.size %}
+                                    <small class="item-size text-muted">Size: {{ item.size }}</small><br>
+                                    {% endif %}
+                                    <div class="item-quantity">Quantity: {{ item.quantity }}</div>
+                                </div>
+                                <div class="item-actions">
+                                    <div class="item-price">
+                                        ${{ "%.2f"|format(item.price|replace('$', '')|float * item.quantity) }}
+                                    </div>
+                                    <a href="{{ url_for('payment.remove_from_cart', item_index=loop.index0) }}" class="btn btn-sm btn-outline-danger mt-1">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-cart text-center py-4">
+                                <i class="fas fa-shopping-cart fa-3x mb-3" style="color: #ccc;"></i>
+                                <h5>Your cart is empty</h5>
+                                <p class="text-muted">Add some jerseys to get started!</p>
+                                <a href="{{ url_for('jerseys.show_jerseys') }}" class="btn btn-primary">
+                                    <i class="fas fa-tshirt me-2"></i>Shop Jerseys
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="order-summary">
+                        <div class="summary-line">
+                            <span>Subtotal:</span>
+                            <span>${{ "%.2f"|format(order.original_subtotal) }}</span>
+                        </div>
+                        
+                        {% if order.jersey_discount > 0 %}
+                        <div class="summary-line discount-line">
+                            <span>Jersey Discount (20% off):</span>
+                            <span class="discount-amount">-${{ "%.2f"|format(order.jersey_discount) }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if order.hat_discount > 0 %}
+                        <div class="summary-line discount-line">
+                            <span>Hat BOGO 50% Discount:</span>
+                            <span class="discount-amount">-${{ "%.2f"|format(order.hat_discount) }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if order.total_savings > 0 %}
+                        <div class="summary-line savings-line">
+                            <span><strong>Total Savings:</strong></span>
+                            <span class="savings-amount"><strong>-${{ "%.2f"|format(order.total_savings) }}</strong></span>
+                        </div>
+                        <div class="summary-line adjusted-subtotal">
+                            <span>Adjusted Subtotal:</span>
+                            <span>${{ "%.2f"|format(order.subtotal) }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="summary-line">
+                            <span>Shipping:</span>
+                            {% if order.free_shipping_applied %}
+                            <span class="free-shipping">
+                                <span class="original-price">${{ "12.99" }}</span>
+                                <span class="discount-amount">FREE</span>
+                            </span>
+                            {% else %}
+                            <span>${{ "%.2f"|format(order.shipping) }}</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="summary-line">
+                            <span>Tax:</span>
+                            <span>${{ "%.2f"|format(order.tax) }}</span>
+                        </div>
+                        
+                        <div class="summary-line total-line">
+                            <span><strong>Total:</strong></span>
+                            <span><strong>${{ "%.2f"|format(order.total) }}</strong></span>
+                        </div>
+                        
+                        {% if order.total_savings > 0 %}
+                        <div class="savings-highlight">
+                            <i class="fas fa-tag me-1"></i>
+                            You saved ${{ "%.2f"|format(order.total_savings) }} on this order!
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="promo-code mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Promo code">
+                            <button class="btn btn-outline-secondary" type="button">Apply</button>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-actions">
+                        <button type="button" class="btn btn-primary btn-lg btn-block">
+                            <i class="fas fa-lock me-2"></i>Place Order
+                        </button>
+                        <small class="secure-note">
+                            <i class="fas fa-shield-alt me-1"></i>
+                            Your payment information is secure and encrypted
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trust Badges -->
+<div class="container mt-5 mb-5">
+    <div class="trust-badges">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="trust-item">
+                    <i class="fas fa-shield-alt fa-2x mb-2" style="color: var(--nfl-blue);"></i>
+                    <h6>Secure Payments</h6>
+                    <small>SSL encrypted checkout</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="trust-item">
+                    <i class="fas fa-shipping-fast fa-2x mb-2" style="color: var(--nfl-blue);"></i>
+                    <h6>Fast Shipping</h6>
+                    <small>Free on orders over $75</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="trust-item">
+                    <i class="fas fa-undo fa-2x mb-2" style="color: var(--nfl-blue);"></i>
+                    <h6>Easy Returns</h6>
+                    <small>30-day return policy</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="trust-item">
+                    <i class="fas fa-certificate fa-2x mb-2" style="color: var(--nfl-blue);"></i>
+                    <h6>Authentic Gear</h6>
+                    <small>Official NFL merchandise</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Page Header */
+    .payment-header {
+        background: linear-gradient(135deg, var(--nfl-light-gray) 0%, var(--nfl-white) 50%, var(--nfl-light-gray) 100%);
+        padding: 3rem 0;
+        border-bottom: 3px solid var(--nfl-red);
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--nfl-black);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .page-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+    }
+    
+    .security-badge {
+        text-align: center;
+    }
+    
+    .security-text {
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: var(--nfl-blue);
+        margin-top: 0.5rem;
+    }
+    
+    /* Checkout Progress */
+    .checkout-progress {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--nfl-white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .progress-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+    
+    .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--nfl-light-gray);
+        color: #666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .progress-step.active .step-number {
+        background: var(--nfl-blue);
+        color: white;
+    }
+    
+    .step-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #666;
+    }
+    
+    .progress-step.active .step-label {
+        color: var(--nfl-black);
+        font-weight: bold;
+    }
+    
+    .progress-line {
+        height: 2px;
+        width: 80px;
+        background: var(--nfl-light-gray);
+        margin: 0 1rem;
+        margin-top: -20px;
+    }
+    
+    /* Checkout Sections */
+    .checkout-section {
+        background: var(--nfl-white);
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .section-header {
+        background: var(--nfl-light-gray);
+        padding: 1.5rem 2rem;
+        border-bottom: 2px solid var(--nfl-blue);
+    }
+    
+    .section-header h3 {
+        margin: 0;
+        color: var(--nfl-black);
+        font-weight: bold;
+    }
+    
+    .section-content {
+        padding: 2rem;
+    }
+    
+    /* Form Styling */
+    .form-label {
+        font-weight: 600;
+        color: var(--nfl-black);
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-control, .form-select {
+        border: 2px solid var(--nfl-light-gray);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: var(--nfl-blue);
+        box-shadow: 0 0 0 0.2rem rgba(30, 77, 139, 0.25);
+    }
+    
+    /* Free Shipping Alert */
+    .free-shipping-alert {
+        margin-bottom: 1.5rem;
+    }
+    
+    .alert-success {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        border: none;
+        color: white;
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+    }
+    
+    /* Shipping Options */
+    .shipping-option {
+        background: var(--nfl-light-gray);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .shipping-option:hover {
+        background: #e9ecef;
+    }
+    
+    .shipping-option.recommended {
+        background: rgba(40, 167, 69, 0.1);
+        border-color: #28a745;
+        box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+    }
+    
+    .shipping-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.25rem;
+    }
+    
+    .shipping-price {
+        color: var(--nfl-blue);
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .free-price {
+        color: #28a745 !important;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    
+    .badge-success {
+        background: #28a745;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 15px;
+        font-size: 0.7rem;
+        margin-left: 0.5rem;
+    }
+    
+    /* Payment Methods */
+    .payment-method {
+        background: var(--nfl-light-gray);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        transition: background 0.3s ease;
+    }
+    
+    .payment-method:hover {
+        background: #e9ecef;
+    }
+    
+    .method-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Cart Item Styling */
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--nfl-light-gray);
+    }
+    
+    .order-item:last-child {
+        border-bottom: none;
+    }
+    
+    .item-details {
+        flex-grow: 1;
+        margin-right: 1rem;
+    }
+    
+    .item-name {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .item-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.5rem;
+    }
+    
+    .item-price {
+        font-weight: bold;
+        color: var(--nfl-blue);
+        font-size: 1.1rem;
+    }
+    
+    .empty-cart {
+        background: var(--nfl-light-gray);
+        border-radius: 8px;
+        margin: 1rem 0;
+    }
+    
+    .empty-cart h5 {
+        color: var(--nfl-black);
+        margin-bottom: 0.5rem;
+    }
+    
+    .accepted-cards {
+        display: flex;
+        gap: 0.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .accepted-cards i {
+        color: var(--nfl-blue);
+    }
+    
+    /* Order Review */
+    .order-review-section {
+        background: var(--nfl-white);
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        top: 2rem;
+    }
+    
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--nfl-light-gray);
+    }
+    
+    .item-name {
+        font-weight: bold;
+        color: var(--nfl-black);
+        margin-bottom: 0.25rem;
+    }
+    
+    .item-size, .item-quantity {
+        font-size: 0.9rem;
+        color: #666;
+    }
+    
+    .item-price {
+        font-weight: bold;
+        color: var(--nfl-blue);
+        font-size: 1.1rem;
+    }
+    
+    /* Order Summary */
+    .order-summary {
+        padding: 1rem 0;
+        border-top: 2px solid var(--nfl-light-gray);
+        margin-top: 1rem;
+    }
+    
+    .summary-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+    
+    .discount-line {
+        color: var(--nfl-red);
+        font-weight: 500;
+    }
+    
+    .discount-amount {
+        color: var(--nfl-red) !important;
+        font-weight: bold;
+    }
+    
+    .savings-line {
+        background: rgba(213, 10, 10, 0.1);
+        padding: 0.5rem;
+        border-radius: 6px;
+        margin: 0.75rem 0;
+    }
+    
+    .savings-amount {
+        color: var(--nfl-red) !important;
+    }
+    
+    .adjusted-subtotal {
+        border-top: 1px solid var(--nfl-light-gray);
+        padding-top: 0.5rem;
+        font-weight: 600;
+    }
+    
+    .free-shipping {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .original-price {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 0.9rem;
+    }
+    
+    .total-line {
+        border-top: 1px solid var(--nfl-light-gray);
+        padding-top: 0.75rem;
+        margin-top: 0.75rem;
+        font-size: 1.2rem;
+    }
+    
+    .savings-highlight {
+        background: linear-gradient(45deg, var(--nfl-red), #ff6b35);
+        color: white;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: bold;
+        box-shadow: 0 3px 6px rgba(213, 10, 10, 0.3);
+    }
+    
+    /* Checkout Actions */
+    .btn-block {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .secure-note {
+        display: block;
+        text-align: center;
+        color: #666;
+        font-size: 0.85rem;
+    }
+    
+    /* Trust Badges */
+    .trust-badges {
+        background: var(--nfl-light-gray);
+        padding: 3rem 2rem;
+        border-radius: 15px;
+    }
+    
+    .trust-item {
+        padding: 1rem;
+    }
+    
+    .trust-item h6 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .trust-item small {
+        color: #666;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 2rem;
+        }
+        
+        .checkout-progress {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .progress-line {
+            display: none;
+        }
+        
+        .section-content {
+            padding: 1.5rem;
+        }
+        
+        .order-review-section {
+            position: static !important;
+            margin-top: 2rem;
+        }
+        
+        .shipping-info {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+
+{% endblock %}

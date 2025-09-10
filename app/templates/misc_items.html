@@ -1,0 +1,554 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="misc-header mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="page-title mb-2">
+                    <i class="fas fa-gift me-3" style="color: var(--nfl-red);"></i>Fan Gear & Collectibles
+                </h1>
+                <p class="page-subtitle mb-0">Show your team spirit with authentic AFC North fan merchandise</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="header-badge">
+                    <i class="fas fa-star fa-3x" style="color: var(--nfl-blue);"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories Banner -->
+<div class="container mb-5">
+    <div class="categories-banner">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="category-icon">
+                    <i class="fas fa-key fa-2x"></i>
+                    <h5>Keychains</h5>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="category-icon">
+                    <i class="fas fa-mug-hot fa-2x"></i>
+                    <h5>Drinkware</h5>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="category-icon">
+                    <i class="fas fa-flag fa-2x"></i>
+                    <h5>Flags</h5>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="category-icon">
+                    <i class="fas fa-trophy fa-2x"></i>
+                    <h5>Collectibles</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AFC North Division Section -->
+<div class="container">
+    <div class="division-header text-center mb-5">
+        <h2 class="section-title">
+            <i class="fas fa-football-ball me-2" style="color: var(--nfl-red);"></i>AFC North Fan Gear
+        </h2>
+        <p class="section-subtitle">Premium collectibles and accessories for every devoted fan</p>
+    </div>
+
+    <!-- Teams Grid -->
+    {% for team_key, team_data in teams.items() %}
+    <div class="team-section mb-5">
+        <div class="team-header mb-4">
+            <h3 class="team-name" style="color: {{ team_data.team_colors[0] }};">
+                {{ team_data.team_name }}
+            </h3>
+            <div class="team-colors">
+                {% for color in team_data.team_colors %}
+                <div class="color-swatch" style="background-color: {{ color }};"></div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for item in team_data.products %}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="item-card" data-team="{{ team_key }}">
+                    <!-- Image Placeholder -->
+                    <div class="item-image-placeholder" style="background: linear-gradient(135deg, {{ team_data.team_colors[0] }}, {{ team_data.team_colors[1] }});">
+                        <div class="image-overlay">
+                            {% if item.category == 'Keychain' %}
+                                <i class="fas fa-key fa-3x"></i>
+                            {% elif item.category == 'Drinkware' %}
+                                <i class="fas fa-mug-hot fa-3x"></i>
+                            {% elif item.category == 'Home Decor' %}
+                                <i class="fas fa-flag fa-3x"></i>
+                            {% elif item.category == 'Collectible' %}
+                                <i class="fas fa-trophy fa-3x"></i>
+                            {% else %}
+                                <i class="fas fa-gift fa-3x"></i>
+                            {% endif %}
+                            <div class="image-text">{{ item.image_placeholder }}</div>
+                        </div>
+                        <div class="category-badge">{{ item.category }}</div>
+                    </div>
+                    
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h4 class="item-name">{{ item.name }}</h4>
+                        </div>
+                        
+                        <p class="item-description">{{ item.description }}</p>
+                        
+                        <div class="item-features">
+                            {% for feature in item.features %}
+                            <span class="feature-tag">
+                                <i class="fas fa-check-circle"></i>
+                                {{ feature }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="item-footer">
+                            <div class="price-section">
+                                <span class="price">{{ item.price }}</span>
+                                <small class="price-note">Great gift idea!</small>
+                            </div>
+                            
+                            <div class="item-actions">
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fas fa-cart-plus me-1"></i>Add to Cart
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-eye me-1"></i>Quick View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="item-badges">
+                        <span class="quality-badge">
+                            <i class="fas fa-certificate"></i>Official
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Gift Ideas Section -->
+<div class="container mb-5">
+    <div class="gift-ideas-section">
+        <h3 class="gift-title text-center mb-4">
+            <i class="fas fa-gifts me-2" style="color: var(--nfl-red);"></i>Perfect Gift Ideas
+        </h3>
+        
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="gift-card">
+                    <div class="gift-icon">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <h5>Birthday Gifts</h5>
+                    <p>Surprise any NFL fan with team-themed keychains, mugs, or mini helmets</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="gift-card">
+                    <div class="gift-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h5>Home Decor</h5>
+                    <p>Flags and collectibles perfect for man caves, offices, or game rooms</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <div class="gift-card">
+                    <div class="gift-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h5>Tailgating</h5>
+                    <p>Portable items like mugs and keychains for the ultimate tailgate experience</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="container mb-5">
+    <div class="cta-section">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h3 class="cta-title">Building Your Fan Collection?</h3>
+                <p class="cta-text">Start with these essentials and discover more exclusive items in our complete NFL merchandise store.</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="{{ url_for('jerseys.show_jerseys') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-tshirt me-2"></i>Shop Jerseys
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Page Header Styling */
+    .misc-header {
+        background: linear-gradient(135deg, var(--nfl-light-gray) 0%, var(--nfl-white) 50%, var(--nfl-light-gray) 100%);
+        padding: 3rem 0;
+        border-bottom: 3px solid var(--nfl-red);
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--nfl-black);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .page-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+    }
+    
+    .header-badge {
+        text-align: center;
+    }
+    
+    /* Categories Banner */
+    .categories-banner {
+        background: var(--nfl-light-gray);
+        padding: 2.5rem 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+    }
+    
+    .category-icon {
+        padding: 1rem;
+    }
+    
+    .category-icon i {
+        color: var(--nfl-blue);
+        margin-bottom: 1rem;
+    }
+    
+    .category-icon h5 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    /* Division Header */
+    .division-header .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--nfl-black);
+        margin-bottom: 0.5rem;
+    }
+    
+    .division-header .section-subtitle {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    /* Team Section Styling */
+    .team-section {
+        border-bottom: 2px solid var(--nfl-light-gray);
+        padding-bottom: 3rem;
+    }
+    
+    .team-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .team-name {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    .team-colors {
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .color-swatch {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid var(--nfl-white);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    /* Item Card Styling */
+    .item-card {
+        background: var(--nfl-white);
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+        position: relative;
+    }
+    
+    .item-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+    
+    /* Image Placeholder */
+    .item-image-placeholder {
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .image-overlay {
+        text-align: center;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .image-overlay i {
+        margin-bottom: 1rem;
+        opacity: 0.8;
+    }
+    
+    .image-text {
+        font-size: 0.85rem;
+        font-weight: 500;
+        background: rgba(255,255,255,0.2);
+        padding: 0.4rem 0.8rem;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .category-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(255,255,255,0.95);
+        color: var(--nfl-blue);
+        padding: 0.3rem 0.6rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    /* Item Content */
+    .item-content {
+        padding: 1.5rem;
+    }
+    
+    .item-header {
+        margin-bottom: 1rem;
+    }
+    
+    .item-name {
+        color: var(--nfl-black);
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin: 0;
+        line-height: 1.3;
+    }
+    
+    .item-description {
+        color: #666;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .item-features {
+        margin-bottom: 1.5rem;
+    }
+    
+    .feature-tag {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-size: 0.8rem;
+        color: var(--nfl-blue);
+    }
+    
+    .feature-tag i {
+        margin-right: 0.4rem;
+        font-size: 0.7rem;
+    }
+    
+    .item-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .price-section {
+        flex-grow: 1;
+    }
+    
+    .price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--nfl-blue);
+    }
+    
+    .price-note {
+        display: block;
+        color: var(--nfl-red);
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+    }
+    
+    .item-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .item-badges {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .quality-badge {
+        background: rgba(255,255,255,0.95);
+        color: var(--nfl-blue);
+        padding: 0.3rem 0.6rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    /* Gift Ideas Section */
+    .gift-ideas-section {
+        background: var(--nfl-light-gray);
+        padding: 3rem 2rem;
+        border-radius: 15px;
+    }
+    
+    .gift-title {
+        color: var(--nfl-black);
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+    
+    .gift-card {
+        background: var(--nfl-white);
+        padding: 2rem 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        height: 100%;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .gift-card:hover {
+        transform: translateY(-3px);
+    }
+    
+    .gift-icon {
+        color: var(--nfl-red);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .gift-card h5 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .gift-card p {
+        color: #666;
+        font-size: 0.9rem;
+        margin: 0;
+        line-height: 1.4;
+    }
+    
+    /* Call to Action */
+    .cta-section {
+        background: linear-gradient(135deg, var(--nfl-blue), var(--nfl-black));
+        color: white;
+        padding: 2.5rem 2rem;
+        border-radius: 15px;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-text {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 2rem;
+        }
+        
+        .team-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .item-footer {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .item-actions {
+            flex-direction: row;
+            width: 100%;
+        }
+        
+        .item-actions .btn {
+            flex: 1;
+        }
+        
+        .categories-banner .row {
+            flex-wrap: wrap;
+        }
+        
+        .categories-banner .col-md-3 {
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+        }
+        
+        .cta-section .col-md-4 {
+            margin-top: 1rem;
+        }
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,333 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Contact Us Header -->
+<div class="contact-banner mb-4">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="banner-title mb-2">
+                <i class="fas fa-headset me-3"></i>Contact Us
+            </h1>
+            <p class="banner-subtitle">We're here to help with all your NFL gear needs</p>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Information Section -->
+<div class="container mb-5">
+    <div class="row">
+        <!-- Contact Info Cards -->
+        <div class="col-lg-8 mb-4">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope fa-2x" style="color: var(--nfl-red);"></i>
+                        </div>
+                        <h5>Email Support</h5>
+                        <p class="contact-detail">{{ contact.email }}</p>
+                        <small class="text-muted">Response within 24 hours</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone fa-2x" style="color: var(--nfl-blue);"></i>
+                        </div>
+                        <h5>Phone Support</h5>
+                        <p class="contact-detail">{{ contact.phone }}</p>
+                        <small class="text-muted">Live support available</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt fa-2x" style="color: var(--nfl-red);"></i>
+                        </div>
+                        <h5>Store Location</h5>
+                        <p class="contact-detail">
+                            {{ contact.address.street }}<br>
+                            {{ contact.address.city }}, {{ contact.address.state }} {{ contact.address.zip }}
+                        </p>
+                        <small class="text-muted">Visit our physical location</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="contact-info-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock fa-2x" style="color: var(--nfl-blue);"></i>
+                        </div>
+                        <h5>Business Hours</h5>
+                        <p class="contact-detail">
+                            <strong>Mon-Fri:</strong> {{ contact.hours.weekdays }}<br>
+                            <strong>Sat-Sun:</strong> {{ contact.hours.weekends }}
+                        </p>
+                        <small class="text-muted">Customer service hours</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Form -->
+        <div class="col-lg-4">
+            <div class="contact-form-card">
+                <h4 class="form-title mb-3">
+                    <i class="fas fa-paper-plane me-2" style="color: var(--nfl-red);"></i>Send us a Message
+                </h4>
+                
+                <form class="contact-form">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Your full name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="your.email@example.com" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <select class="form-control" id="subject" name="subject" required>
+                            <option value="">Select a topic...</option>
+                            <option value="order">Order Inquiry</option>
+                            <option value="product">Product Question</option>
+                            <option value="shipping">Shipping & Returns</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" placeholder="Tell us how we can help you..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-send me-2"></i>Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="container mb-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title">
+            <i class="fas fa-question-circle me-2" style="color: var(--nfl-red);"></i>Frequently Asked Questions
+        </h2>
+        <p class="section-subtitle">Quick answers to common questions</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="faq-item">
+                <h6><i class="fas fa-shipping-fast me-2" style="color: var(--nfl-blue);"></i>How long does shipping take?</h6>
+                <p>Standard shipping takes 3-5 business days. Express shipping available for 1-2 day delivery.</p>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <div class="faq-item">
+                <h6><i class="fas fa-undo me-2" style="color: var(--nfl-blue);"></i>What's your return policy?</h6>
+                <p>We accept returns within 30 days of purchase. Items must be in original condition.</p>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <div class="faq-item">
+                <h6><i class="fas fa-shield-alt me-2" style="color: var(--nfl-blue);"></i>Are your jerseys authentic?</h6>
+                <p>Yes, all our jerseys are officially licensed NFL merchandise with authenticity guarantees.</p>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <div class="faq-item">
+                <h6><i class="fas fa-credit-card me-2" style="color: var(--nfl-blue);"></i>What payment methods do you accept?</h6>
+                <p>We accept all major credit cards, PayPal, Apple Pay, and Google Pay for your convenience.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Contact Banner */
+    .contact-banner {
+        background: linear-gradient(135deg, #4682B4 0%, #5F9EA0 100%);
+        color: var(--nfl-black);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+    }
+    
+    .banner-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .banner-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+    
+    /* Contact Info Cards */
+    .contact-info-card {
+        background: var(--nfl-white);
+        border: 2px solid var(--nfl-light-gray);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        height: 100%;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .contact-info-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        border-color: var(--nfl-blue);
+    }
+    
+    .contact-icon {
+        margin-bottom: 1rem;
+    }
+    
+    .contact-info-card h5 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-detail {
+        color: var(--nfl-black);
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+    }
+    
+    /* Contact Form Card */
+    .contact-form-card {
+        background: var(--nfl-white);
+        border: 2px solid var(--nfl-light-gray);
+        border-radius: 12px;
+        padding: 2rem;
+        height: fit-content;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 2rem;
+    }
+    
+    .form-title {
+        color: var(--nfl-black);
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--nfl-light-gray);
+    }
+    
+    .form-label {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-control {
+        border: 2px solid var(--nfl-light-gray);
+        border-radius: 6px;
+        padding: 0.75rem;
+        transition: border-color 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--nfl-blue);
+        box-shadow: 0 0 0 0.2rem rgba(30, 77, 139, 0.25);
+    }
+    
+    /* Section Headers */
+    .section-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--nfl-black);
+        margin-bottom: 0.5rem;
+    }
+    
+    .section-subtitle {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* FAQ Items */
+    .faq-item {
+        background: var(--nfl-white);
+        border: 2px solid var(--nfl-light-gray);
+        border-radius: 8px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .faq-item:hover {
+        border-color: var(--nfl-blue);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .faq-item h6 {
+        color: var(--nfl-black);
+        font-weight: bold;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    .faq-item p {
+        color: #666;
+        margin-bottom: 0;
+        line-height: 1.5;
+    }
+    
+    /* Button Styling */
+    .btn-primary {
+        background-color: var(--nfl-red);
+        border-color: var(--nfl-red);
+        font-weight: bold;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #b50909;
+        border-color: #b50909;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(213, 10, 10, 0.4);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .banner-title {
+            font-size: 1.8rem;
+        }
+        
+        .banner-subtitle {
+            font-size: 1rem;
+        }
+        
+        .contact-form-card {
+            position: static;
+            margin-top: 1rem;
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
+        }
+    }
+</style>
+
+{% endblock %}
